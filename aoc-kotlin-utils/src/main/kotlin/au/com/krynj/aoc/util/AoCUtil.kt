@@ -38,7 +38,15 @@ object AoCUtil {
         return line.split(delimiter).map { BigInteger(it) }
     }
 
+    fun readLineAsInt(line: String, delimiter: String): List<BigInteger> {
+        return line.split(delimiter).map { BigInteger(it) }
+    }
+
     fun readLineAsFloat(line: String, delimiter: Char): List<BigDecimal> {
+        return line.split(delimiter).map { BigDecimal(it) }
+    }
+
+    fun readLineAsFloat(line: String, delimiter: String): List<BigDecimal> {
         return line.split(delimiter).map { BigDecimal(it) }
     }
 

@@ -10,6 +10,11 @@ dependencies {
     implementation("org.reflections:reflections:0.10.2")
 }
 
+tasks.register<Jar>("testJar") {
+    archiveClassifier.set("tests") // Adds a "tests" classifier to the artifact name
+    from(sourceSets["test"].output) // Includes the test sources and compiled classes
+}
+
 publishing {
     publications {
         create<MavenPublication>("maven") {
@@ -17,7 +22,9 @@ publishing {
             groupId = rootProject.group.toString()
             artifactId = project.name
             version = project.version.toString()
+            artifact(tasks.named("testJar"))
         }
+
     }
 
     repositories {

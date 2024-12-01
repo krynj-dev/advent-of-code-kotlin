@@ -8,7 +8,7 @@ class AoCUtilTest {
 
     @Test
     fun readResourceFile() {
-        val lines = AoCUtil.readResourceFile("testAoCFile.txt");
+        val lines = AoCUtil.readResourceFile("aco-test-23-1.txt");
 
         assertEquals(13, lines.size)
     }
