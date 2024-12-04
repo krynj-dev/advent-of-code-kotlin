@@ -34,11 +34,35 @@ object AoCUtil {
         }
     }
 
-    fun readLineAsInt(line: String, delimiter: Char): List<BigInteger> {
+    fun readLinesAsInt(lines: List<String>, delimiter: Char): List<List<Int>> {
+        return lines.map { readLineAsInt(it, delimiter) }
+    }
+
+    fun readLinesAsInt(lines: List<String>, delimiter: String): List<List<Int>> {
+        return lines.map { readLineAsInt(it, delimiter) }
+    }
+
+    fun readLinesAsBigInt(lines: List<String>, delimiter: Char): List<List<BigInteger>> {
+        return lines.map { readLineAsBigInt(it, delimiter) }
+    }
+
+    fun readLinesAsBigInt(lines: List<String>, delimiter: String): List<List<BigInteger>> {
+        return lines.map { readLineAsBigInt(it, delimiter) }
+    }
+
+    fun readLineAsInt(line: String, delimiter: Char): List<Int> {
+        return line.split(delimiter).map { it.toInt() }
+    }
+
+    fun readLineAsInt(line: String, delimiter: String): List<Int> {
+        return line.split(delimiter).map { it.toInt() }
+    }
+
+    fun readLineAsBigInt(line: String, delimiter: Char): List<BigInteger> {
         return line.split(delimiter).map { BigInteger(it) }
     }
 
-    fun readLineAsInt(line: String, delimiter: String): List<BigInteger> {
+    fun readLineAsBigInt(line: String, delimiter: String): List<BigInteger> {
         return line.split(delimiter).map { BigInteger(it) }
     }
 
