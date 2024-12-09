@@ -1,9 +1,7 @@
 package au.com.krynj.aoc.framework
 
-import java.math.BigInteger
+interface AoCObservable<T: AoCObserverContext> {
+    fun addObserver(observer: AoCObserver<T>)
 
-interface AoCObservable {
-    fun addObserver(observer: AoCObserver)
-
-    fun broadcast(partialResult: BigInteger)
+    fun broadcast(context: T)
 }
