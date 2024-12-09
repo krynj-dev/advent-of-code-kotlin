@@ -6,7 +6,7 @@ import java.lang.reflect.Modifier
 class AoCApplication(private var classPath: String) {
 
     fun start() {
-        val annotatedClasses = getImplementationsOfInterface<AoCDay>(classPath)
+        val annotatedClasses = getImplementationsOfInterface<AoCDay<*>>(classPath)
         val filteredClasses = annotatedClasses.filter { !it.isInterface && !Modifier.isAbstract(it.modifiers) }.toSet()
 
         var instances = filteredClasses.map { it.getDeclaredConstructor().newInstance() }

@@ -34,6 +34,20 @@ object AoCUtil {
         }
     }
 
+    fun readResourceFile(fileName: String, delimiter: String): List<List<String>> {
+        val lines = readResourceFile(fileName)
+        val sections: MutableList<List<String>> = ArrayList()
+        var section: MutableList<String> = ArrayList()
+        lines.forEach {
+            if (it == delimiter) {
+                sections.add(section)
+                section = ArrayList()
+            } else section.add(it)
+        }
+        sections.add(section)
+        return sections
+    }
+
     fun readLinesAsInt(lines: List<String>, delimiter: Char): List<List<Int>> {
         return lines.map { readLineAsInt(it, delimiter) }
     }
@@ -48,6 +62,15 @@ object AoCUtil {
 
     fun readLinesAsBigInt(lines: List<String>, delimiter: String): List<List<BigInteger>> {
         return lines.map { readLineAsBigInt(it, delimiter) }
+    }
+    inline fun <reified T> transpose(xs: List<List<T>>): List<List<T>> {
+        val cols = xs[0].size
+        val rows = xs.size
+        return List(cols) { j ->
+            List(rows) { i ->
+                xs[i][j]
+            }
+        }
     }
 
     fun readLineAsInt(line: String, delimiter: Char): List<Int> {
