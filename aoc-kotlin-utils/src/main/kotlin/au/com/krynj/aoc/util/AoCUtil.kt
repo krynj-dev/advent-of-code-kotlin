@@ -56,6 +56,10 @@ object AoCUtil {
         return lines.map { readLineAsInt(it, delimiter) }
     }
 
+    fun readLinesAsInt(lines: List<String>): List<List<Int>> {
+        return lines.map { readLineAsInt(it) }
+    }
+
     fun readLinesAsBigInt(lines: List<String>, delimiter: Char): List<List<BigInteger>> {
         return lines.map { readLineAsBigInt(it, delimiter) }
     }
@@ -71,6 +75,10 @@ object AoCUtil {
                 xs[i][j]
             }
         }
+    }
+
+    fun readLineAsInt(line: String, digits: Boolean = true): List<Int> {
+        return """(\d${if (digits) "" else """\s"""})""".toRegex().findAll(line).map { it.value.toInt() }.toList()
     }
 
     fun readLineAsInt(line: String, delimiter: Char): List<Int> {

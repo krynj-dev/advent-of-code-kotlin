@@ -17,12 +17,12 @@ object AoCAlgorithmUtil {
      *
      * @return a list of coordinates where the matching char was found in the search space
      */
-    fun findAround(y: Int, x: Int, puzzle: List<String>, target: Char, range: Int): List<Pair<Int, Int>> {
-        assert(puzzle.all { it.length == puzzle[0].length })
+    fun <T> findAround(pos: Pair<Int, Int>, puzzle: List<List<T>>, target: T, range: Int, includeDiagonals: Boolean = true): List<Pair<Int, Int>> {
+        assert(puzzle.all { it.size == puzzle[0].size })
         val locations: MutableList<Pair<Int, Int>> = mutableListOf()
-        for (m in max(0, y - range)..min(y + range, puzzle.size - 1)) {
-            for (l in max(0, x - range)..min(x + range, puzzle.first().length - 1)) {
-                if (puzzle[m][l] == target) locations.add(Pair(m, l))
+        for (m in max(0, pos.first - range)..min(pos.first + range, puzzle.size - 1)) {
+            for (l in max(0, pos.second - range)..min(pos.second + range, puzzle.first().size - 1)) {
+                if (puzzle[m][l] == target && (includeDiagonals || (m == pos.first || l == pos.second))) locations.add(Pair(m, l))
             }
         }
         return locations
