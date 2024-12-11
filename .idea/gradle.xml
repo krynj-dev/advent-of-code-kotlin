@@ -8,9 +8,18 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/aoc-kotlin-compose" />
             <option value="$PROJECT_DIR$/aoc-kotlin-framework" />
             <option value="$PROJECT_DIR$/aoc-kotlin-utils" />
             <option value="$PROJECT_DIR$/aoc-web-communicator" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/aoc-kotlin-cmp" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/aoc-kotlin-cmp" />
           </set>
         </option>
       </GradleProjectSettings>
