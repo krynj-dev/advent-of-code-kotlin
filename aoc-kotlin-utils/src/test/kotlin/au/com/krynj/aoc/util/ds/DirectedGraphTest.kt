@@ -70,4 +70,21 @@ class DirectedGraphTest {
         g.addEdge(n4, n5)
         assertNull(g.topologicalSort())
     }
+
+    @Test
+    fun getNodeByValue() {
+        val g: DirectedGraph<Int> = DirectedGraph()
+        val n1: DirectedGraph.GraphNode<Int> = g.addNode(1)
+        val n2: DirectedGraph.GraphNode<Int> = g.addNode(2)
+        val n3: DirectedGraph.GraphNode<Int> = g.addNode(3)
+        val n4: DirectedGraph.GraphNode<Int> = g.addNode(4)
+        val n5: DirectedGraph.GraphNode<Int> = g.addNode(5)
+        g.addEdge(n1, n2)
+        g.addEdge(n1, n5)
+        g.addEdge(n2, n3)
+        g.addEdge(n3, n1)
+        g.addEdge(n4, n5)
+        assertNull(g.getNodeByValue(6))
+        assertEquals(n2, g.getNodeByValue(2))
+    }
 }

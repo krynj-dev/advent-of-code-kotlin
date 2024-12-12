@@ -3,18 +3,25 @@ package au.com.krynj.aoc.util.ds
 import java.util.PriorityQueue
 
 class DirectedGraph<T: Comparable<T>> {
-    val nodes: MutableSet<GraphNode<T>> = mutableSetOf()
-    val edges: MutableSet<DirectedGraphEdge<T>> = mutableSetOf()
+    val nodes: MutableMap<T, GraphNode<T>> = mutableMapOf()
+    val edges: MutableList<DirectedGraphEdge<T>> = mutableListOf()
 
 
     fun addNode(nodeValue: T): GraphNode<T> {
         val createdNode = GraphNode(nodeValue)
-        nodes.add(createdNode)
+        if (nodes[nodeValue] != null) throw Exception("CLASH!")
+        nodes.putIfAbsent(nodeValue, createdNode)
         return createdNode
     }
 
     fun addEdge(from: GraphNode<T>, to: GraphNode<T>): DirectedGraphEdge<T> {
         val createdEdge = DirectedGraphEdge(from, to)
+        edges.add(createdEdge)
+        return createdEdge
+    }
+
+    fun addEdge(from: GraphNode<T>, to: GraphNode<T>, weight: Int): DirectedGraphEdge<T> {
+        val createdEdge = DirectedGraphEdge(from, to, weight)
         edges.add(createdEdge)
         return createdEdge
     }
@@ -28,20 +35,20 @@ class DirectedGraph<T: Comparable<T>> {
         }
     }
 
-    class DirectedGraphEdge<T: Comparable<T>>(val from: GraphNode<T>, val to: GraphNode<T>) {
+    class DirectedGraphEdge<T: Comparable<T>>(val from: GraphNode<T>, val to: GraphNode<T>, val weight: Int = 1) {
         override fun toString(): String {
-            return "($from, $to)"
+            return "($from, $to): $weight"
         }
     }
 
     fun hasCycle(): Boolean {
         val finished: MutableMap<GraphNode<T>, Boolean> = mutableMapOf()
         val visited: MutableMap<GraphNode<T>, Boolean> = mutableMapOf()
-        for (node in nodes) {
+        for (node in nodes.values) {
             finished[node] = false
             visited[node] = false
         }
-        for (node in nodes) {
+        for (node in nodes.values) {
             if (dfs((finished), visited, node)) return true
         }
         return false
@@ -61,7 +68,7 @@ class DirectedGraph<T: Comparable<T>> {
     fun topologicalSort(): List<GraphNode<T>>? {
         val sorted: MutableList<GraphNode<T>> = ArrayList()
         val parents = PriorityQueue(parentNodes())
-        val edgesCopy = mutableSetOf<DirectedGraphEdge<T>>()
+        val edgesCopy = mutableListOf<DirectedGraphEdge<T>>()
         edgesCopy.addAll(edges)
 
         while (parents.isNotEmpty()) {
@@ -81,11 +88,11 @@ class DirectedGraph<T: Comparable<T>> {
         return sorted
     }
 
-    fun parentNodes(): Set<GraphNode<T>> {
-        val parents: MutableSet<GraphNode<T>> = HashSet(nodes)
+    fun parentNodes(): List<GraphNode<T>> {
+        val parents: MutableList<GraphNode<T>> = ArrayList(nodes.values)
 
         nodes.forEach {
-            nodeChildren(it).forEach { child ->
+            nodeChildren(it.value).forEach { child ->
                 parents.remove(child)
             }
         }
@@ -93,20 +100,33 @@ class DirectedGraph<T: Comparable<T>> {
         return parents
     }
 
-    fun nodeChildren(from: GraphNode<T>): Set<GraphNode<T>> {
-        return edges.filter { it.from == from }.map { it.to }.toSet()
+    fun nodeChildren(from: GraphNode<T>): List<GraphNode<T>> {
+        return edges.filter { it.from == from }.map { it.to }
     }
 
-    fun nodeChildren(from: GraphNode<T>, edgeSubset: Set<DirectedGraphEdge<T>>): Set<GraphNode<T>> {
-        return edgeSubset.filter { it.from == from }.map { it.to }.toSet()
+    fun nodeChildren(from: GraphNode<T>, edgeSubset: List<DirectedGraphEdge<T>>): List<GraphNode<T>> {
+        return edgeSubset.filter { it.from == from }.map { it.to }
     }
 
-    fun nodeParents(to: GraphNode<T>): Set<GraphNode<T>> {
-        return edges.filter { it.to == to }.map { it.from }.toSet()
+    fun nodeParents(to: GraphNode<T>): List<GraphNode<T>> {
+        return edges.filter { it.to == to }.map { it.from }
     }
 
-    fun nodeParents(to: GraphNode<T>, edgeSubset: Set<DirectedGraphEdge<T>>): Set<GraphNode<T>> {
-        return edgeSubset.filter { it.to == to }.map { it.from }.toSet()
+    fun nodeParents(to: GraphNode<T>, edgeSubset: Set<DirectedGraphEdge<T>>): List<GraphNode<T>> {
+        return edgeSubset.filter { it.to == to }.map { it.from }
     }
 
+    fun getNodeByValue(value: T): GraphNode<T>? {
+        return nodes[value]
+    }
+
+    fun childrenAtDistance(node: GraphNode<T>, depth: Int, distance: Int): List<GraphNode<T>> {
+        val children = nodeChildren(node)
+        if (depth == distance) {
+            return children.toList()
+        }
+        return nodeChildren(node).flatMap {
+            childrenAtDistance(it, depth + 1, distance)
+        }
+    }
 }

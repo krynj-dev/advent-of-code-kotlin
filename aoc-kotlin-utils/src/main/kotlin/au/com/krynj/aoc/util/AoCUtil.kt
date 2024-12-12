@@ -78,7 +78,7 @@ object AoCUtil {
     }
 
     fun readLineAsInt(line: String, digits: Boolean = true): List<Int> {
-        return """(\d${if (digits) "" else """\s"""})""".toRegex().findAll(line).map { it.value.toInt() }.toList()
+        return """(\d${if (digits) ")" else """+)(?=\s|${'$'})"""}""".toRegex().findAll(line).map { it.groupValues[1].toInt() }.toList()
     }
 
     fun readLineAsInt(line: String, delimiter: Char): List<Int> {

@@ -12,4 +12,11 @@ class AoCUtilTest {
 
         assertEquals(13, lines.size)
     }
+
+    @Test
+    fun readLinesAsIntWhitespace() {
+        val nums = AoCUtil.readLineAsInt("0 1 2  33 4", digits = false)
+
+        assertEquals(5, nums.size)
+    }
 }

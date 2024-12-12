@@ -13,6 +13,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import au.com.krynj.aoc.framework.AoCDay
 
@@ -54,7 +55,7 @@ fun GridItem(item: AoCDay<*>) {
         elevation = 4.dp
     ) {
         Button(onClick = { showContent = !showContent }) {
-            Text("Click me! ${item.getDay()}")
+            Text("${item.getDay()}", fontWeight = FontWeight.Bold)
         }
     }
 }

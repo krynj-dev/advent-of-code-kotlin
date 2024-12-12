@@ -15,14 +15,6 @@
           </set>
         </option>
       </GradleProjectSettings>
-      <GradleProjectSettings>
-        <option name="externalProjectPath" value="$PROJECT_DIR$/aoc-kotlin-cmp" />
-        <option name="modules">
-          <set>
-            <option value="$PROJECT_DIR$/aoc-kotlin-cmp" />
-          </set>
-        </option>
-      </GradleProjectSettings>
     </option>
   </component>
 </project>
