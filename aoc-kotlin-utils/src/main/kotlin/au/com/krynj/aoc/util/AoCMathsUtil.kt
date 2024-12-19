@@ -4,7 +4,7 @@ import kotlin.math.abs
 
 object AoCMathsUtil {
 
-    fun gcd(a: Int, b: Int): Int {
+    fun gcd(a: Long, b: Long): Long {
         var x = abs(a)
         var y = abs(b)
         while (x != y) {
@@ -16,5 +16,20 @@ object AoCMathsUtil {
         }
         assert(x == y)
         return x
+    }
+
+    fun gcd(a: Int, b: Int): Int {
+        return gcd(a.toLong(), b.toLong()).toInt()
+    }
+
+    fun lcm(a: Long, b:Long): Long {
+        val x = abs(a)
+        val y = abs(b)
+        val d = gcd(a, b)
+        return (y / d) * a
+    }
+
+    fun lcm(a: Int, b: Int): Int {
+        return lcm(a.toLong(), b.toLong()).toInt()
     }
 }
