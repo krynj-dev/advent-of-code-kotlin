@@ -51,7 +51,7 @@ class DirectedGraphTest {
         g.addEdge(n2, n3)
         g.addEdge(n3, n5)
         g.addEdge(n4, n5)
-        val sorted = g.topologicalSort()
+        val sorted = g.topologicalSort { a, b -> a.value.compareTo(b.value) }
         assertNotNull(sorted)
     }
 
@@ -68,7 +68,7 @@ class DirectedGraphTest {
         g.addEdge(n2, n3)
         g.addEdge(n3, n1)
         g.addEdge(n4, n5)
-        assertNull(g.topologicalSort())
+        assertNull(g.topologicalSort  { a, b -> a.value.compareTo(b.value) })
     }
 
     @Test

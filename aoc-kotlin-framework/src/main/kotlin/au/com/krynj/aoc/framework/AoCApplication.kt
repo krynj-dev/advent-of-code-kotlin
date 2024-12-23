@@ -6,7 +6,7 @@ import java.lang.reflect.Modifier
 class AoCApplication(var classPath: String) {
 
     fun start() {
-        val annotatedClasses = getImplementationsOfInterface<AoCDay<*>>(classPath)
+        val annotatedClasses = getImplementationsOfInterface<AoCDay<*, *>>(classPath)
         val filteredClasses = annotatedClasses.filter { !it.isInterface && !Modifier.isAbstract(it.modifiers) }.toSet()
 
         var instances = filteredClasses.map { it.getDeclaredConstructor().newInstance() }
@@ -23,8 +23,8 @@ class AoCApplication(var classPath: String) {
         return reflections.getSubTypesOf(T::class.java).filter { T::class.java.isAssignableFrom(it) }.toSet()
     }
 
-    fun getDayClasses(): Set<AoCDay<*>> {
-        return getImplementationsOfInterface<AoCDay<*>>(classPath).asSequence().filter { !it.isInterface && !Modifier.isAbstract(it.modifiers) }
+    fun getDayClasses(): Set<AoCDay<*, *>> {
+        return getImplementationsOfInterface<AoCDay<*, *>>(classPath).asSequence().filter { !it.isInterface && !Modifier.isAbstract(it.modifiers) }
             .toSet()
             .map { it.getDeclaredConstructor().newInstance() }.sortedBy { it.getDay() }.toSet()
     }

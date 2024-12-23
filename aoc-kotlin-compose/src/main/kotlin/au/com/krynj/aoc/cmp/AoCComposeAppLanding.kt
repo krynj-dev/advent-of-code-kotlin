@@ -19,7 +19,7 @@ import au.com.krynj.aoc.framework.AoCDay
 
 @Composable
 @Preview
-fun AoCComposeAppLanding(dayClasses: Set<AoCDay<*>>) {
+fun AoCComposeAppLanding(dayClasses: Set<AoCDay<*, *>>) {
     val sortedDays = dayClasses.toList().sortedBy { it.getDay() }
     MaterialTheme {
         var showContent by remember { mutableStateOf(false) }
@@ -46,7 +46,7 @@ fun AoCComposeAppLanding(dayClasses: Set<AoCDay<*>>) {
 }
 
 @Composable
-fun GridItem(item: AoCDay<*>) {
+fun GridItem(item: AoCDay<*, *>) {
     var showContent by remember { mutableStateOf(false) }
     Card(
         modifier = Modifier

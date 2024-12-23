@@ -2,7 +2,7 @@ package au.com.krynj.aoc.util.ds
 
 import java.util.PriorityQueue
 
-class DirectedGraph<T: Comparable<T>> {
+class DirectedGraph<T> {
     val nodes: MutableMap<T, GraphNode<T>> = mutableMapOf()
     val edges: MutableList<DirectedGraphEdge<T>> = mutableListOf()
 
@@ -25,17 +25,13 @@ class DirectedGraph<T: Comparable<T>> {
         edges.add(createdEdge)
         return createdEdge
     }
-    class GraphNode<T: Comparable<T>>(val value: T): Comparable<T> {
-        override fun compareTo(other: T): Int {
-            return other.compareTo(value)
-        }
-
+    class GraphNode<T>(val value: T) {
         override fun toString(): String {
             return value.toString()
         }
     }
 
-    class DirectedGraphEdge<T: Comparable<T>>(val from: GraphNode<T>, val to: GraphNode<T>, val weight: Int = 1) {
+    class DirectedGraphEdge<T>(val from: GraphNode<T>, val to: GraphNode<T>, val weight: Int = 1) {
         override fun toString(): String {
             return "($from, $to): $weight"
         }
@@ -65,9 +61,10 @@ class DirectedGraph<T: Comparable<T>> {
         return found
     }
 
-    fun topologicalSort(): List<GraphNode<T>>? {
+    fun topologicalSort(comp: Comparator<GraphNode<T>>): List<GraphNode<T>>? {
         val sorted: MutableList<GraphNode<T>> = ArrayList()
-        val parents = PriorityQueue(parentNodes())
+        val parents = PriorityQueue(comp)
+        parents.addAll(parentNodes())
         val edgesCopy = mutableListOf<DirectedGraphEdge<T>>()
         edgesCopy.addAll(edges)
 
